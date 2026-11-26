@@ -2,9 +2,9 @@
 """Entry program for news-image-20261125.
 
 Copies the pre-rendered Wednesday 25 November 2026 front page (entry.png,
-generated deterministically by prep/news25/build.py) into the output
-directory. No clock, no network, no randomness: both runs write the
-same bytes.
+generated deterministically offline by prep/news25/build_v2.py) into the
+output directory. No clock, no network, no randomness: both runs write
+the same bytes.
 """
 import os
 import shutil
@@ -16,6 +16,7 @@ def main():
     outdir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(outdir, exist_ok=True)
     dst = os.path.join(outdir, "entry.png")
+    # v2 keeps this copy-only pattern; all rendering stays offline.
     # Size guard: the gate caps the image at 1 MiB.
     assert os.path.getsize(src) <= 1048576, "entry.png exceeds the 1 MiB cap"
     shutil.copyfile(src, dst)
